@@ -26,14 +26,26 @@ This script allows players to **sell items to a shared stock**, and **authorized
 
 Place the script in your `resources` folder.
 
-### 2. Ensure in `server.cfg`
+### 2. Script SQL
+
+Insert the script.sql in your server database. !
+
+### 3. Ensure in `server.cfg`
 
 ```cfg
 ensure stx-stockstore
 ```
+### 4. Configure
+
+Configure the script according to your server liking.
 
 
 ---
 ## Credits
 
 Thank you [REHAN](https://github.com/Rehanniz) for contributing in this script.
+
+---
+## Support
+
+- [Join Discord](https://discord.gg/fPjSxEHFMt)
