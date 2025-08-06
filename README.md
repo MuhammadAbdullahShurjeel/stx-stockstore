@@ -29,3 +29,9 @@ Place the script in your `resources` folder.
 ```cfg
 ensure stx-stockstore
 ```
+
+
+---
+## Credits
+
+Thank you [REHAN](https://github.com/Rehanniz) for contributing in this script.
