@@ -22,9 +22,10 @@ This script allows players to **sell items to a shared stock**, and **authorized
 
 ### 1. Download & Place
 
-Place the script in your `resources` folder (e.g. `resources/[scripts]/stock_market`).
+Place the script in your `resources` folder.
 
 ### 2. Ensure in `server.cfg`
 
 ```cfg
-ensure stock_market
+ensure stx-stockstore
+```
