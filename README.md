@@ -26,6 +26,9 @@ This script allows players to **sell items to a shared stock**, and **authorized
 
 Place the script in your `resources` folder.
 
+Also download its dependencies
+ - ox_lib
+
 ### 2. Script SQL
 
 Insert the script.sql in your server database. !
