@@ -1,4 +1,6 @@
 # 📦 RedM RP Stock Market System
+<img width="1024" height="1536" alt="ChatGPT Image Aug 6, 2025, 07_55_55 PM" src="https://github.com/user-attachments/assets/4b78548a-5680-40c5-b3ec-a132e34715cf" />
+
 
 A dynamic stock market system for RedM Roleplay servers, compatible with both **RSG** and **VORP** frameworks.
 
