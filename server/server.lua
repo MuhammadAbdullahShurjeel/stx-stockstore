@@ -141,7 +141,7 @@ AddEventHandler('stx-stockstore:server:sellitem', function(itemname, orgamt)
         local Player = RSGCore.Functions.GetPlayer(_source)
         if Player.Functions.RemoveItem(itemname, orgamt) then
             local price = getItemPrice(itemname)
-            MySQL.query('SELECT * FROM stockvenderr', function(result)
+            MySQL.query('SELECT * FROM stx_stockvender', function(result)
                 if result then
                     for k, v in pairs (result) do
                         if v.itemname == itemname then
@@ -261,3 +261,4 @@ end
 -----
 
 syncDatabase()
+
