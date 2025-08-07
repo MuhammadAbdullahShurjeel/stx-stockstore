@@ -56,7 +56,17 @@ local function isEmpty(table)
     return true
 end
 
+local function isItemInConfig(itemname)
+    for _, item in pairs(Config.Items) do
+        if item.itemname == itemname then
+            return true
+        end
+    end
+    return false
+end
+
 local function syncDatabase()
+    local dbItems = MySQL.query.await("SELECT itemname FROM stx_stockvender")
     for _, v in pairs (Config.Items) do
         local result = MySQL.query.await("SELECT stock FROM stx_stockvender WHERE itemname = ?", {v.itemname})
         if not isEmpty(result) then
@@ -67,6 +77,15 @@ local function syncDatabase()
                 v.itemname,
                 0
             })
+        end
+    end
+    -- Delete extra items that got removed from config
+    if dbItems then
+        for _, dbItem in pairs(dbItems) do
+            if not isItemInConfig(tostring(dbItem.itemname)) then
+                print('Removing obsolete item from database: ' .. dbItem.itemname)
+                MySQL.query("DELETE FROM stx_stockvender WHERE itemname = ?", {dbItem.itemname})
+            end
         end
     end
 end
@@ -240,4 +259,5 @@ end
 
 
 -----
+
 syncDatabase()
