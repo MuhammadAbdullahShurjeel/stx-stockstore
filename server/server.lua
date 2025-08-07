@@ -132,16 +132,16 @@ AddEventHandler('stx-stockstore:server:sellitem', function(itemname, orgamt)
                     end)
 
                     Character.addCurrency(0, orgamt * price) -- 0 = cash
-                    NotifyHandler(_source, "Stock Store", "You sold " .. orgamt .. "x " .. itemname .. "!", "success", 4000)
+                    NotifyHandler(_source, Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].server_item_sold .. "" .. orgamt .. "x " .. itemname .. "!", "success", 4000)
                 else
-                    NotifyHandler(_source, "Stock Store", "You don't have enough of that item.", "error", 4000)
+                    NotifyHandler(_source, Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].server_notenoughitem, "error", 4000)
                 end
             end)
     elseif Config.Core == "RSG" then
         local Player = RSGCore.Functions.GetPlayer(_source)
         if Player.Functions.RemoveItem(itemname, orgamt) then
             local price = getItemPrice(itemname)
-            MySQL.query('SELECT * FROM stx_stockvender', function(result)
+            MySQL.query('SELECT * FROM stockvenderr', function(result)
                 if result then
                     for k, v in pairs (result) do
                         if v.itemname == itemname then
@@ -154,9 +154,9 @@ AddEventHandler('stx-stockstore:server:sellitem', function(itemname, orgamt)
                 end
             end)
             Player.Functions.AddMoney('cash', orgamt*price)
-            NotifyHandler(_source, "Stock Store", "You sold " .. orgamt .. "x " .. itemname .. "!", "success", 4000)
+            NotifyHandler(_source, Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].server_item_sold .. "" .. orgamt .. "x " .. itemname .. "!", "success", 4000)
         else
-            NotifyHandler(_source, "Stock Store", "You don't have enough of that item.", "error", 4000)
+            NotifyHandler(_source, Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].server_notenoughitem, "error", 4000)
         end
 
     end
@@ -185,10 +185,9 @@ AddEventHandler('stx-stockstore:server:buyitem', function(itemname, orgamt)
                 end
             end)
             VorpInv.addItem(_source, itemname, orgamt)
-            NotifyHandler(_source, "Stock Store", "You bought " .. orgamt .. "x " .. itemname .. "!", "success", 4000)
-
+            NotifyHandler(_source, Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].server_item_bought .."" .. orgamt .. "x " .. itemname .. "!", "success", 4000)
         else
-            NotifyHandler(_source, "Stock Store", "You don't have enough cash.", "error", 4000)
+            NotifyHandler(_source, Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].server_notenoughcash, "error", 4000)
         end
     elseif Config.Core == "RSG" then
         local Player = RSGCore.Functions.GetPlayer(_source)
@@ -196,7 +195,7 @@ AddEventHandler('stx-stockstore:server:buyitem', function(itemname, orgamt)
         if Player.Functions.RemoveMoney('cash', orgamt*price) then
             local price = getItemPrice(itemname)
             local stock = getItemStock(tostring(itemname))
-            MySQL.query('SELECT * FROM stockvenderr', function(result)
+            MySQL.query('SELECT * FROM stx_stockvender', function(result)
                 if result then
                     for k, v in pairs (result) do
                         if v.itemname == itemname then
@@ -207,7 +206,9 @@ AddEventHandler('stx-stockstore:server:buyitem', function(itemname, orgamt)
                 end
             end)
             Player.Functions.AddItem(itemname, orgamt)
-            NotifyHandler(_source, "Stock Store", "You bought " .. orgamt .. "x " .. itemname .. "!", "success", 4000)
+            NotifyHandler(_source, Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].server_item_bought .."" .. orgamt .. "x " .. itemname .. "!", "success", 4000)
+        else
+            NotifyHandler(_source, Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].server_notenoughcash, "error", 4000)
         end
 
     end
@@ -231,7 +232,7 @@ if Config.Core == "VORP" then
                 end
             end)
         else
-            NotifyHandler(source, "Stock Store", "I don't know you, get lost!", "error", 4000)
+            NotifyHandler(source, Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].server_ped_error, "error", 4000)
             cb(nil)
         end
     end)
@@ -241,7 +242,7 @@ elseif Config.Core == "RSG" then
         local pData = RSGCore.Functions.GetPlayer(src)
         local PlayerJob = pData.PlayerData.job.name
         if getJob(PlayerJob) then
-            MySQL.query('SELECT * FROM stockvenderr', function(result)
+            MySQL.query('SELECT * FROM stx_stockvender', function(result)
                 if result then
                     cb(result)
                 else
@@ -249,7 +250,7 @@ elseif Config.Core == "RSG" then
                 end
             end)
         else
-            NotifyHandler(source, "Stock Store", "I don't know you, get lost!", "error", 4000)
+            NotifyHandler(source, Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].server_ped_error, "error", 4000)
             cb(nil)
         end
     end)
@@ -261,4 +262,3 @@ end
 -----
 
 syncDatabase()
-
