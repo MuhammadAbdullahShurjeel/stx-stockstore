@@ -20,7 +20,7 @@ Config.Blip = {
 }
 
 -- MENU 
-Config.Sell = false
+Config.Sell = true
 Config.Buy = true
 Config.Jobs = { --  These jobs restriction is for Buy Option
     'blacksmith',
@@ -33,8 +33,8 @@ Config.Locations = {
 
 Config.Items = {
     {
-        itemname = 'wood',
-        label = 'Wood',
+        itemname = 'bread',
+        label = 'Bread',
         price = 0.05,
     },
 }
@@ -43,6 +43,26 @@ Config.Items = {
 Config.Locale = "en"
 Config.Locales = {
     ["en"] = {
+        client_menu_price_label = "Price : ",
+        client_menu_stock_label = "Stock : ",
+        client_menu_title = "Stock Store",
+        client_notify_title = "Stock Store",
+        client_menu_input_askforamountsell = "Amount You Want To Sell",
+        client_notify_stockempty = "Stock is empty",
+        client_menu_input_askforamountbuy = "Amount You Want To Buy",
+        client_notify_notenoughstock = "Not enough stock!",
+        client_prompt_label = "Open Stock Store",
+        client_menu_buy_title = "Buy Available Stock",
+        client_menu_sell_title = "Sell Available Stock",
+
+        ---
+        server_item_sold = "You sold ", 
+        server_notenoughitem = "You don't have enough of that item.",
+        server_item_bought = "You bought ",
+        server_notenoughcash = "You don't have enough cash.",
+        server_ped_error = "I don't know you, get lost!",
+        
+
 
     },
 }
