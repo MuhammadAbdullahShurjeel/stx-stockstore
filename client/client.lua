@@ -53,10 +53,10 @@ local function SellMenu()
             imglnk = "nui://" ..Config.InventoryURL.. "" ..v.itemname .. ".png"
             menu[#menu + 1] = {
                 title = v.label,
-                description = "Price : "..v.price,
+                description = Config.Locales[Config.Locale].client_menu_price_label .. "" ..v.price,
                 image = imglnk,
                 onSelect = function()
-                    local input = lib.inputDialog('Stock Store', {'Amount You Want To Sell'})
+                    local input = lib.inputDialog(Config.Locales[Config.Locale].client_menu_title, {Config.Locales[Config.Locale].client_menu_input_askforamountsell})
                     if input then
                         if input[1] then
                             TriggerServerEvent('stx-stockstore:server:sellitem', v.itemname, input[1])
@@ -67,7 +67,7 @@ local function SellMenu()
         end
         lib.registerContext({
             id = 'stx_stockstore_',
-            title = 'Stock Store',
+            title = Config.Locales[Config.Locale].client_menu_title,
             options = menu
         })
         lib.showContext('stx_stockstore_')
@@ -77,10 +77,10 @@ local function SellMenu()
             imglnk = "nui://" ..Config.InventoryURL.. "" ..RSGCore.Shared.Items[tostring(v.itemname)].image
             menu[#menu + 1] = {
                 title = v.label,
-                description = "Price : "..v.price,
+                description = Config.Locales[Config.Locale].client_menu_price_label .. "" ..v.price,
                 image = imglnk,
                 onSelect = function()
-                    local input = lib.inputDialog('Stock Store', {'Amount You Want To Sell'})
+                    local input = lib.inputDialog(Config.Locales[Config.Locale].client_menu_title, {Config.Locales[Config.Locale].client_menu_input_askforamountsell})
                     if input then
                         if input[1] then
                             TriggerServerEvent('stx-stockstore:server:sellitem', v.itemname, input[1])
@@ -91,7 +91,7 @@ local function SellMenu()
         end
         lib.registerContext({
             id = 'stx_stockstore_',
-            title = 'Stock Store',
+            title = Config.Locales[Config.Locale].client_menu_title,
             options = menu
         })
         lib.showContext('stx_stockstore_')
@@ -112,20 +112,20 @@ local function BuyMenu()
                 local name = getItemLabel(v.itemname)
                 menus[#menus + 1] = {
                     title = name or v.itemname,
-                    description = "Stock: " .. v.stock,
+                    description =  Config.Locales[Config.Locale].client_menu_stock_label .. "".. v.stock,
                     onSelect = function()
                         if v.stock <= 0 then
-                            NotifyHandler("Stock Store", "Stock is empty", "success", 4000)
+                            NotifyHandler(Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].client_notify_stockempty, "error", 4000)
                             return
                         end
 
-                        local input = lib.inputDialog('Stock Store', {'Amount You Want To Buy'})
+                        local input = lib.inputDialog(Config.Locales[Config.Locale].client_menu_title, {Config.Locales[Config.Locale].client_menu_input_askforamountbuy})
                         if input and input[1] then
                             local amount = tonumber(input[1])
                             if not amount or amount <= 0 then return end
 
                             if amount > v.stock then
-                                NotifyHandler("Stock Store", "Not enough stock!", "error", 4000)
+                                NotifyHandler(Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].client_notify_notenoughstock, "error", 4000)
                                 return
                             end
 
@@ -136,7 +136,7 @@ local function BuyMenu()
             end
             lib.registerContext({
                 id = 'stx_stockstore_buy_',
-                title = 'Stock Store',
+                title = Config.Locales[Config.Locale].client_menu_title,
                 options = menus
             })
             lib.showContext('stx_stockstore_buy_')
@@ -150,17 +150,17 @@ local function BuyMenu()
                 local name = getItemLabel(v.itemname)                
                 menus[#menus + 1] = {
                     title = ''..name,
-                    description = ''..v.stock,
+                    description = Config.Locales[Config.Locale].client_menu_stock_label .. "".. v.stock,
                     onSelect = function()
                         if v.stock == 0 then 
-                            NotifyHandler("Stock Store", "Stock is empty", "success", 4000)
+                            NotifyHandler(Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].client_notify_stockempty, "error", 4000)
                             return 
                         end
-                        local input = lib.inputDialog('Stock Store', {'Amount You Want To Buy'})
+                        local input = lib.inputDialog(Config.Locales[Config.Locale].client_menu_title, {Config.Locales[Config.Locale].client_menu_input_askforamountbuy})
                         if input then
                             if input[1] then
                                 if tonumber(input[1]) > v.stock then 
-                                    NotifyHandler("Stock Store", "Not enough stock!", "error", 4000)
+                                    NotifyHandler(Config.Locales[Config.Locale].client_notify_title, Config.Locales[Config.Locale].client_notify_notenoughstock, "error", 4000)
                                     return 
                                 end
                                 TriggerServerEvent('stx-stockstore:server:buyitem', v.itemname, input[1], v.stock)
@@ -171,7 +171,7 @@ local function BuyMenu()
             end
             lib.registerContext({
                 id = 'stx_stockstore_buy_',
-                title = 'Stock Store',
+                title = Config.Locales[Config.Locale].client_menu_title,
                 options = menus
             })
             lib.showContext('stx_stockstore_buy_')
@@ -189,7 +189,7 @@ RegisterNetEvent('stx-stockstore:client:openbuymenu', function()
 
     if Config.Buy then
         table.insert(menuOptions, {
-            title = "Buy Available Stock",
+            title = Config.Locales[Config.Locale].client_menu_buy_title,
             onSelect = function()
                 BuyMenu()
             end,
@@ -198,7 +198,7 @@ RegisterNetEvent('stx-stockstore:client:openbuymenu', function()
 
     if Config.Sell then
         table.insert(menuOptions, {
-            title = "Sell Stocks",
+            title = Config.Locales[Config.Locale].client_menu_sell_title,
             onSelect = function()
                 SellMenu()
             end,
@@ -207,7 +207,7 @@ RegisterNetEvent('stx-stockstore:client:openbuymenu', function()
 
     lib.registerContext({
         id = 'stx_stockstore_mainmenu_',
-        title = 'Stock Store',
+        title = Config.Locales[Config.Locale].client_menu_title,
         options = menuOptions
     })
 
@@ -221,7 +221,7 @@ end)
 local promptGroup = GetRandomIntInRange(0, 0x7FFFFFFF)
 local prompt
 local promptKey = Config.PromptKey -- 'J' key
-local labelText = "Open Stock Store"
+local labelText = Config.Locales[Config.Locale].client_prompt_label
 local promptRadius = 2.0
 
 local function registerPrompts()
