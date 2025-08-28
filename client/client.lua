@@ -143,6 +143,7 @@ local function BuyMenu()
         end)
     elseif Config.Core == "RSG" then
         RSGCore.Functions.TriggerCallback("stx-stockstore:createcallback:getstock", function(result)
+            local menus = {}
             if result == nil then
                 return
             end
@@ -263,4 +264,5 @@ CreateThread(function()
         end
     end
 end)
+
 
